@@ -27,7 +27,7 @@ export function OwnerContracts() {
     if (!contractNames.includes(selectedContract)) {
       setSelectedContract(contractNames[0]);
     }
-  }, [contractNames, selectedContract, setSelectedContract]);
+  }, [selectedContract, setSelectedContract]);
 
   if (!isConnected) {
     return (
