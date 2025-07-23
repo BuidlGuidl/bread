@@ -272,38 +272,74 @@ const Home: NextPage = () => {
         {/* Introduction section */}
         <section className="bg-[#df57c4] p-6 lg:p-10 w-full lg:w-[45vw] border-x-[1px] border-y-[1px] border-black lg:border-none overflow-auto">
           <div className="flex flex-col">
-            <p className="mt-0">Run an Ethereum node with a single command:</p>
-            <p className="mt-0">Mac/linux</p>
-            <div className="bg-black p-2 lg:p-4 text-white text-sm overflow-auto">
-              <p className="m-2">/bin/bash -c &quot;$(curl -fsSL https://bgclient.io)&quot;</p>
-            </div>
-            <p> or run the client from the repo:</p>
-            <div className="bg-black p-2 lg:p-4 text-white text-sm overflow-auto">
-              <p className="m-2 whitespace-nowrap">git clone https://github.com/BuidlGuidl/buidlguidl-client.git</p>
-              <p className="m-2">cd buidlguidl-client</p>
-              <p className="m-2">yarn install</p>
-              <p className="m-2">node index.js</p>
-            </div>
+            <p className="mt-0">Some text about BuidlGuidl Bread here</p>
           </div>
         </section>
 
         {/* Second row for mobile - flex row to make sections share the row */}
         <div className="flex flex-row flex-1">
-          {/* Screenshot section */}
-          <section className="bg-[#DDDDDD] w-7/12 lg:flex-1 p-6 flex justify-center border-x-[1px] border-b-[1px] border-black lg:border-b-0">
-            <Image
-              src="/screenshot-3.png"
-              alt="screenshot"
-              className="object-contain cursor-pointer"
-              width={972}
-              height={875}
-              onClick={() => setIsModalOpen(true)}
-            />
+          {/* Transfer Interface */}
+          <section className="bg-[#DDDDDD] lg:flex-1 p-6 flex flex-col items-center border-x-[1px] border-b-[1px] border-black lg:border-b-0 lg:border-r-0">
+            <span>🍞 Bread Balance:</span>
+            <span className="text-center sm:text-left">
+              {breadBalance ? Number(formatEther(breadBalance)).toLocaleString() : "0"} BGBRD
+            </span>
+            {pendingBread !== null && <p className="text-2xl font-semibold">👨‍🍳 Pending: {pendingBread} BGBRD</p>}
           </section>
+        </div>
+      </div>
 
-          {/* Satellite section */}
-          <section className="bg-[#20F658] p-6 w-5/12 lg:flex-1 flex justify-center border-r-[1px] border-b-[1px] border-black lg:border-r-0 lg:border-l-0 lg:border-b-0">
-            <Image src="/satellite-10fps.gif" alt="satellite" className="object-contain" width={436} height={535} />
+      <div className="flex flex-col lg:flex-row lg:border-x-[1px] lg:border-y-[1px] border-black">
+        {/* Introduction section */}
+        <section className="bg-[#df57c4] p-6 lg:p-10 w-full lg:w-[45vw] border-x-[1px] border-y-[1px] border-black lg:border-none overflow-auto">
+          <div className="flex flex-col">
+            <p className="mt-0">Some text about BuidlGuidl Bread here</p>
+          </div>
+        </section>
+
+        {/* Second row for mobile - flex row to make sections share the row */}
+        <div className="flex flex-row flex-1">
+          {/* Transfer Interface */}
+          <section className="bg-[#DDDDDD] lg:flex-1 p-6 flex flex-col items-center border-x-[1px] border-b-[1px] border-black lg:border-b-0 lg:border-r-0">
+            <h2 className="text-xl font-bold mb-4 text-blue-500">Transfer Bread</h2>
+            <div className="space-y-4 w-full max-w-md">
+              <div>
+                <label className="block text-sm font-medium mb-2">Recipient Address</label>
+                <AddressInput value={transferTo} onChange={setTransferTo} placeholder="Enter recipient address" />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Amount</label>
+                <InputBase
+                  name="transferAmount"
+                  value={transferAmount}
+                  onChange={setTransferAmount}
+                  placeholder="0.0"
+                  prefix={<span className="pl-4 -mr-2 text-accent self-center">🍞</span>}
+                />
+              </div>
+
+              <button
+                className={`w-full btn text-lg font-semibold ${
+                  isTransferring
+                    ? "btn-disabled"
+                    : transferTo && transferAmount
+                    ? "bg-blue-400 hover:bg-blue-500 text-white border-blue-400 hover:border-blue-500"
+                    : "btn-primary"
+                }`}
+                onClick={handleTransfer}
+                disabled={!connectedAddress || isTransferring || !transferTo || !transferAmount}
+              >
+                {isTransferring ? (
+                  <span className="flex items-center gap-2">
+                    <span className="loading loading-spinner loading-sm"></span>
+                    Transferring...
+                  </span>
+                ) : (
+                  "Transfer Bread"
+                )}
+              </button>
+            </div>
           </section>
         </div>
       </div>
@@ -420,16 +456,6 @@ const Home: NextPage = () => {
       <div className="border-t-[1px] border-black pt-10 mt-10">
         <div className="flex items-center flex-col flex-grow pt-10">
           <div className="px-5 w-full max-w-[1200px]">
-            <div className="flex justify-center items-center space-x-2 flex-col mb-8">
-              <div className="my-2 text-4xl mb-0 font-bold flex flex-col sm:flex-row sm:items-center sm:justify-center sm:space-x-2">
-                <span>🍞 Bread Balance:</span>
-                <span className="text-center sm:text-left">
-                  {breadBalance ? Number(formatEther(breadBalance)).toLocaleString() : "0"} BGBRD
-                </span>
-              </div>
-              {pendingBread !== null && <p className="text-2xl font-semibold">👨‍🍳 Pending: {pendingBread} BGBRD</p>}
-            </div>
-
             <div className="grid grid-cols-1 gap-4">
               {/* Mint Events */}
               <div className="bg-base-300 rounded-3xl px-6 py-4">
@@ -460,49 +486,6 @@ const Home: NextPage = () => {
                         ))}
                     </div>
                   )}
-                </div>
-              </div>
-
-              {/* Transfer Interface */}
-              <div className="bg-base-300 rounded-3xl px-6 py-4">
-                <h2 className="text-xl font-bold mb-4 text-blue-500">Transfer Bread</h2>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Recipient Address</label>
-                    <AddressInput value={transferTo} onChange={setTransferTo} placeholder="Enter recipient address" />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Amount</label>
-                    <InputBase
-                      name="transferAmount"
-                      value={transferAmount}
-                      onChange={setTransferAmount}
-                      placeholder="0.0"
-                      prefix={<span className="pl-4 -mr-2 text-accent self-center">🍞</span>}
-                    />
-                  </div>
-
-                  <button
-                    className={`w-full btn text-lg font-semibold ${
-                      isTransferring
-                        ? "btn-disabled"
-                        : transferTo && transferAmount
-                        ? "bg-blue-400 hover:bg-blue-500 text-white border-blue-400 hover:border-blue-500"
-                        : "btn-primary"
-                    }`}
-                    onClick={handleTransfer}
-                    disabled={!connectedAddress || isTransferring || !transferTo || !transferAmount}
-                  >
-                    {isTransferring ? (
-                      <span className="flex items-center gap-2">
-                        <span className="loading loading-spinner loading-sm"></span>
-                        Transferring...
-                      </span>
-                    ) : (
-                      "Transfer Bread"
-                    )}
-                  </button>
                 </div>
               </div>
             </div>
