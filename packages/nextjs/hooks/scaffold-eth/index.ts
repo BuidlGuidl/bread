@@ -10,5 +10,6 @@ export * from "./useScaffoldWriteContract";
 export * from "./useScaffoldWatchContractEvent";
 export * from "./useScaffoldEventHistory";
 export * from "./useTransactor";
+export * from "./useCopyToClipboard";
 export * from "./useFetchBlocks";
 export * from "./useContractLogs";
