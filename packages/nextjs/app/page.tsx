@@ -301,7 +301,7 @@ const Home: NextPage = () => {
         <div className="flex flex-row flex-1">
           {/* Transfer Interface */}
           <section className="bg-[#DDDDDD] lg:flex-1 p-6 flex flex-col items-center border-x-[1px] border-b-[1px] border-black lg:border-b-0 lg:border-r-0">
-            <h2 className="text-xl font-bold mb-4 text-blue-500">Transfer Bread</h2>
+            <h2 className="text-xl font-bold mb-4 text-black-500">Transfer Bread</h2>
             <div className="space-y-4 w-full max-w-md">
               <div>
                 <label className="block text-sm font-medium mb-2">Recipient Address</label>
@@ -320,12 +320,12 @@ const Home: NextPage = () => {
               </div>
 
               <button
-                className={`w-full btn text-lg font-semibold ${
+                className={`w-full btn rounded-none bg-black text-lg font-semibold ${
                   isTransferring
-                    ? "btn-disabled"
+                    ? "btn-disabled rounded-none"
                     : transferTo && transferAmount
-                    ? "bg-blue-400 hover:bg-blue-500 text-white border-blue-400 hover:border-blue-500"
-                    : "btn-primary"
+                    ? "bg-blue-400 hover:bg-blue-500 text-white border-blue-400 hover:border-blue-500 rounded-none"
+                    : "btn-primary rounded-none"
                 }`}
                 onClick={handleTransfer}
                 disabled={!connectedAddress || isTransferring || !transferTo || !transferAmount}
