@@ -250,7 +250,7 @@ const Home: NextPage = () => {
         </section>
 
         {/* Second row for mobile - flex row to make sections share the row */}
-        <div className="flex flex-row w-full lg:w-3/12">
+        <div className="flex flex-row w-full lg:w-3/12 lg:max-h-[535px]">
           {/* Transfer Interface */}
           <section className="bg-[#20F658] p-6 flex justify-center items-center border-r-[1px] border-l-[1px] border-black lg:border-r-0 flex-1">
             <Image
@@ -266,12 +266,17 @@ const Home: NextPage = () => {
       {/* Second row */}
       <div className="flex flex-col lg:flex-row border-black">
         {/* Bread Balance Section */}
-        <section className="bg-[#DDDDDD] lg:flex-1 p-6 flex flex-col items-center border-x-[1px] border-b-[1px] border-black lg:border-b-0">
-          <span>🍞 Bread Balance:</span>
-          <span className="text-center sm:text-left">
+        <section className="bg-[#DDDDDD] text-2xl font-semibold lg:flex-1 p-6 flex flex-col items-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0">
+          <span>🍞 Your Bread Balance:</span>
+          <span className="text-center text-2xl font-semibold mb-10">
             {breadBalance ? Number(formatEther(breadBalance)).toLocaleString() : "0"} BGBRD
           </span>
-          {pendingBread !== null && <p className="text-2xl font-semibold">👨‍🍳 Pending: {pendingBread} BGBRD</p>}
+          {pendingBread !== null && (
+            <>
+              <span className="text-2xl font-semibold">👨‍🍳 Bread Baking:</span>
+              <span> {pendingBread} BGBRD</span>
+            </>
+          )}
         </section>
         {/* Transfer Interface */}
         <section className="bg-[#DDDDDD] lg:flex-1 p-6 flex flex-col items-center border-x-[1px] border-b-[1px] border-black lg:border-b-0 lg:border-l-[0px]">
