@@ -53,5 +53,6 @@ export const wagmiConnectors = (() => {
       _isInitializing = false;
     }
   }
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return _wagmiConnectors!;
 })();
