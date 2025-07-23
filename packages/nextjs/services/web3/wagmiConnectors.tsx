@@ -25,26 +25,33 @@ const wallets = [
     : []),
 ];
 
-// Memoize the connectors to prevent WalletConnect from being reinitialized
+// Global flag to prevent multiple initializations
+let _isInitializing = false;
 let _wagmiConnectors: ReturnType<typeof connectorsForWallets> | null = null;
 
 /**
  * wagmi connectors for the wagmi context
+ * Enhanced with global initialization flag to prevent React Strict Mode issues
  */
 export const wagmiConnectors = (() => {
-  if (_wagmiConnectors === null) {
-    _wagmiConnectors = connectorsForWallets(
-      [
+  if (_wagmiConnectors === null && !_isInitializing) {
+    _isInitializing = true;
+    try {
+      _wagmiConnectors = connectorsForWallets(
+        [
+          {
+            groupName: "Supported Wallets",
+            wallets,
+          },
+        ],
         {
-          groupName: "Supported Wallets",
-          wallets,
+          appName: "scaffold-eth-2",
+          projectId: scaffoldConfig.walletConnectProjectId,
         },
-      ],
-      {
-        appName: "scaffold-eth-2",
-        projectId: scaffoldConfig.walletConnectProjectId,
-      },
-    );
+      );
+    } finally {
+      _isInitializing = false;
+    }
   }
-  return _wagmiConnectors;
+  return _wagmiConnectors!;
 })();
