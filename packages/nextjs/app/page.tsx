@@ -242,7 +242,10 @@ const Home: NextPage = () => {
         {/* Introduction section */}
         <section className="bg-[#df57c4] p-6 lg:p-10 w-full lg:w-9/12 border-x-[1px] border-y-[1px] border-black lg:border-none overflow-auto">
           <div className="flex flex-col">
-            <p className="mt-0">Some text about BuidlGuidl Bread here</p>
+            <p className="mt-0">
+              Some text about BuidlGuidl Bread here. Bread rules. It is the best bread. I look around and say
+              &quot;wow&quot; BuidlGuidl Bread is the best bread. The best I&apos;ve ever had.
+            </p>
           </div>
         </section>
 
@@ -261,102 +264,94 @@ const Home: NextPage = () => {
         </div>
       </div>
       {/* Second row */}
-      <div className="flex flex-col lg:flex-row lg:border-x-[1px] lg:border-y-[1px] border-black">
-        {/* Second row for mobile - flex row to make sections share the row */}
-        <div className="flex flex-row w-full lg:w-5/12">
-          {/* Transfer Interface */}
-          <section className="bg-[#DDDDDD] lg:flex-1 p-6 flex flex-col items-center border-x-[1px] border-b-[1px] border-black lg:border-b-0 lg:border-r-0">
-            <h2 className="text-xl font-bold mb-4 text-black-500">Transfer Bread</h2>
-            <div className="space-y-4 w-full max-w-md">
-              <div>
-                <label className="block text-sm font-medium mb-2">Recipient Address</label>
-                <AddressInput value={transferTo} onChange={setTransferTo} placeholder="Enter recipient address" />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium mb-2">Amount</label>
-                <InputBase
-                  name="transferAmount"
-                  value={transferAmount}
-                  onChange={setTransferAmount}
-                  placeholder="0.0"
-                  prefix={<span className="pl-4 -mr-2 text-accent self-center">🍞</span>}
-                />
-              </div>
-
-              <button
-                className={`w-full btn rounded-none bg-black text-lg font-semibold ${
-                  isTransferring
-                    ? "btn-disabled rounded-none"
-                    : transferTo && transferAmount
-                    ? "bg-blue-400 hover:bg-blue-500 text-white border-blue-400 hover:border-blue-500 rounded-none"
-                    : "btn-primary rounded-none"
-                }`}
-                onClick={handleTransfer}
-                disabled={!connectedAddress || isTransferring || !transferTo || !transferAmount}
-              >
-                {isTransferring ? (
-                  <span className="flex items-center gap-2">
-                    <span className="loading loading-spinner loading-sm"></span>
-                    Transferring...
-                  </span>
-                ) : (
-                  "Transfer Bread"
-                )}
-              </button>
-            </div>
-          </section>
-        </div>
-
-        {/* Satellite section */}
-        <section className="bg-[#DDDDDD] lg:flex-1 p-6 flex flex-col items-center border-x-[1px] border-b-[1px] border-black lg:border-b-0 lg:border-r-0">
+      <div className="flex flex-col lg:flex-row border-black">
+        {/* Bread Balance Section */}
+        <section className="bg-[#DDDDDD] lg:flex-1 p-6 flex flex-col items-center border-x-[1px] border-b-[1px] border-black lg:border-b-0">
           <span>🍞 Bread Balance:</span>
           <span className="text-center sm:text-left">
             {breadBalance ? Number(formatEther(breadBalance)).toLocaleString() : "0"} BGBRD
           </span>
           {pendingBread !== null && <p className="text-2xl font-semibold">👨‍🍳 Pending: {pendingBread} BGBRD</p>}
         </section>
+        {/* Transfer Interface */}
+        <section className="bg-[#DDDDDD] lg:flex-1 p-6 flex flex-col items-center border-x-[1px] border-b-[1px] border-black lg:border-b-0 lg:border-l-[0px]">
+          <h2 className="text-xl font-bold mb-4 text-black-500">Transfer Bread</h2>
+          <div className="space-y-4 w-full max-w-md">
+            <div>
+              <label className="block text-sm font-medium mb-2">Recipient Address</label>
+              <AddressInput value={transferTo} onChange={setTransferTo} placeholder="Enter recipient address" />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">Amount</label>
+              <InputBase
+                name="transferAmount"
+                value={transferAmount}
+                onChange={setTransferAmount}
+                placeholder="0.0"
+                prefix={<span className="pl-4 -mr-2 text-accent self-center">🍞</span>}
+              />
+            </div>
+
+            <button
+              className={`w-full btn rounded-none bg-black text-lg font-semibold ${
+                isTransferring
+                  ? "btn-disabled rounded-none"
+                  : transferTo && transferAmount
+                  ? "bg-blue-400 hover:bg-blue-500 text-white border-blue-400 hover:border-blue-500 rounded-none"
+                  : "btn-primary rounded-none"
+              }`}
+              onClick={handleTransfer}
+              disabled={!connectedAddress || isTransferring || !transferTo || !transferAmount}
+            >
+              {isTransferring ? (
+                <span className="flex items-center gap-2">
+                  <span className="loading loading-spinner loading-sm"></span>
+                  Transferring...
+                </span>
+              ) : (
+                "Transfer Bread"
+              )}
+            </button>
+          </div>
+        </section>
       </div>
 
-      <div className="lg:grid lg:grid-cols-3 mb-10">
+      <div className="lg:grid lg:grid-cols-3 mb-10 border-t-[0px] border-black lg:border-t-[1px]">
         {/* Map section */}
         <section className="col-span-3 bg-[#F6F6F6] p-6 lg:p-10 border-x-[1px] border-black lg:border-b-[1px]">
-          <div className="border-t-[1px] border-black pt-10 mt-10">
-            <div className="flex items-center flex-col flex-grow pt-10">
-              <div className="px-5 w-full max-w-[1200px]">
-                <div className="grid grid-cols-1 gap-4">
-                  {/* Mint Events */}
-                  <div className="bg-base-300 rounded-3xl px-6 py-4">
-                    <h2 className="text-xl font-bold mb-4 text-green-500">Mint Events</h2>
-                    <div className="h-[300px] md:h-[600px] overflow-y-auto">
-                      {!connectedAddress ? (
-                        <p className="text-center text-lg">Connect your wallet to see your mint events</p>
-                      ) : mintEventsWithTime.length === 0 ? (
-                        <p className="text-center text-lg">No mint events found for your address</p>
-                      ) : (
-                        <div className="space-y-3">
-                          {mintEventsWithTime
-                            .filter(
-                              ({ event }) =>
-                                (event.args as any)?.user?.toLowerCase() === connectedAddress.toLowerCase(),
-                            )
-                            .map(({ event, timestamp }, index) => (
-                              <div key={index} className="bg-base-100 rounded-xl p-3">
-                                <div className="flex justify-between items-center">
-                                  <div className="flex gap-2 items-center">
-                                    <span className="text-lg font-bold text-green-500">Minted</span>
-                                    <span className="text-lg">
-                                      {(event.args as any)?.amount ? formatEther((event.args as any).amount) : "0"}{" "}
-                                      BGBRD
-                                    </span>
-                                  </div>
-                                  <span className="text-sm opacity-70">{timestamp}</span>
+          <div className="flex items-center flex-col flex-grow pt-10">
+            <div className="px-5 w-full max-w-[1200px]">
+              <div className="grid grid-cols-1 gap-4">
+                {/* Mint Events */}
+                <div className="bg-base-300 rounded-3xl px-6 py-4">
+                  <h2 className="text-xl font-bold mb-4 text-green-500">Mint Events</h2>
+                  <div className="h-[300px] md:h-[600px] overflow-y-auto">
+                    {!connectedAddress ? (
+                      <p className="text-center text-lg">Connect your wallet to see your mint events</p>
+                    ) : mintEventsWithTime.length === 0 ? (
+                      <p className="text-center text-lg">No mint events found for your address</p>
+                    ) : (
+                      <div className="space-y-3">
+                        {mintEventsWithTime
+                          .filter(
+                            ({ event }) => (event.args as any)?.user?.toLowerCase() === connectedAddress.toLowerCase(),
+                          )
+                          .map(({ event, timestamp }, index) => (
+                            <div key={index} className="bg-base-100 rounded-xl p-3">
+                              <div className="flex justify-between items-center">
+                                <div className="flex gap-2 items-center">
+                                  <span className="text-lg font-bold text-green-500">Minted</span>
+                                  <span className="text-lg">
+                                    {(event.args as any)?.amount ? formatEther((event.args as any).amount) : "0"} BGBRD
+                                  </span>
                                 </div>
+                                <span className="text-sm opacity-70">{timestamp}</span>
                               </div>
-                            ))}
-                        </div>
-                      )}
-                    </div>
+                            </div>
+                          ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
