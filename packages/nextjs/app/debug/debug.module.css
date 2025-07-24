@@ -1,0 +1,26 @@
+/* Debug page specific styles */
+
+.debugPage h1,
+.debugPage h2,
+.debugPage h3,
+.debugPage h4,
+.debugPage h5,
+.debugPage h6 {
+  color: white;
+}
+
+/* Override theme variables for the debug page */
+.debugPage {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
+}
+
+/* Force white text on all elements that inherit theme colors
+.debugPage * {
+  color: white !important;
+} */
+
+/* Specific override for text-sm elements */
+.debugPage [class*="text-sm"] {
+  color: white !important;
+}
