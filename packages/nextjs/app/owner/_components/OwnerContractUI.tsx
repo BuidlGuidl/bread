@@ -53,6 +53,7 @@ export const OwnerContractUI = ({ contractName, className = "" }: OwnerContractU
     );
   }
 
+  // Check if connected user is the contract owner
   if (contractOwner && connectedAddress.toLowerCase() !== contractOwner.toLowerCase()) {
     return (
       <div className="text-center mt-14">

@@ -15,11 +15,6 @@
   color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
 }
 
-/* Force white text on all elements that inherit theme colors
-.debugPage * {
-  color: white !important;
-} */
-
 /* Specific override for text-sm elements */
 .debugPage [class*="text-sm"] {
   color: white !important;

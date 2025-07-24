@@ -1,0 +1,21 @@
+/* Owner page specific styles */
+
+.ownerPage h1,
+.ownerPage h2,
+.ownerPage h3,
+.ownerPage h4,
+.ownerPage h5,
+.ownerPage h6 {
+  color: white;
+}
+
+/* Override theme variables for the owner page */
+.ownerPage {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
+}
+
+/* Specific override for text-sm elements */
+.ownerPage [class*="text-sm"] {
+  color: white !important;
+} 
