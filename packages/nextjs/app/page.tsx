@@ -169,7 +169,7 @@ const Home: NextPage = () => {
         <section className="bg-[#F6F6F6] text-2xl font-semibold lg:w-5/12 p-6 flex flex-col items-center lg:justify-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0">
           <span>🍞 Your Bread Balance:</span>
           {!connectedAddress ? (
-            <span className="text-center text-lg mb-10">Connect your wallet to see your bread balance</span>
+            <span className="text-center text-lg mb-10">Connect your wallet to see bread balance</span>
           ) : (
             <span className="text-center text-2xl font-semibold mb-10">
               {breadBalance ? Number(formatEther(breadBalance)).toLocaleString() : "0"} BGBRD
