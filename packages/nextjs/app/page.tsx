@@ -293,7 +293,7 @@ const Home: NextPage = () => {
                 name="transferAmount"
                 value={transferAmount}
                 onChange={setTransferAmount}
-                placeholder="0.0"
+                placeholder="0"
                 prefix={<span className="pl-4 -mr-2 text-accent self-center">🍞</span>}
               />
             </div>

@@ -9,9 +9,9 @@ const baseUrl = process.env.VERCEL_URL
   : `http://localhost:${process.env.PORT || 3000}`;
 const imageUrl = `${baseUrl}/thumbnail-client.png`;
 
-const title = "BG Client";
-const titleTemplate = "%s | BG Client";
-const description = "BG Client";
+const title = "BG Bread";
+const titleTemplate = "%s | BG Bread";
+const description = "BG Bread";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
