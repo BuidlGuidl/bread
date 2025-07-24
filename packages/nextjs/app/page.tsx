@@ -250,7 +250,7 @@ const Home: NextPage = () => {
         </section>
 
         {/* Second row for mobile - flex row to make sections share the row */}
-        <div className="flex flex-row w-full lg:w-3/12 lg:max-h-[535px]">
+        <div className="flex flex-row w-full lg:w-3/12 max-h-[205px] lg:max-h-[535px]">
           {/* Transfer Interface */}
           <section className="bg-[#20F658] p-6 flex justify-center items-center border-r-[1px] border-l-[1px] border-black lg:border-r-0 flex-1">
             <Image
@@ -266,7 +266,7 @@ const Home: NextPage = () => {
       {/* Second row */}
       <div className="flex flex-col lg:flex-row border-black">
         {/* Bread Balance Section */}
-        <section className="bg-[#F6F6F6] text-2xl font-semibold lg:flex-1 p-6 flex flex-col items-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0">
+        <section className="bg-[#F6F6F6] text-2xl font-semibold lg:flex-1 p-6 flex flex-col items-center lg:justify-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0">
           <span>🍞 Your Bread Balance:</span>
           <span className="text-center text-2xl font-semibold mb-10">
             {breadBalance ? Number(formatEther(breadBalance)).toLocaleString() : "0"} BGBRD
@@ -298,12 +298,14 @@ const Home: NextPage = () => {
               />
             </div>
 
+            <div className="h-2"></div>
+
             <button
               className={`w-full btn rounded-none text-lg font-semibold ${
                 isTransferring
                   ? "btn-disabled bg-black rounded-none"
                   : transferTo && transferAmount
-                  ? "bg-green-500 hover:bg-[#20F658] text-white border-green-500 hover:border-[#20F658] rounded-none"
+                  ? "bg-[#5655D5] hover:bg-[#3F3EAB] text-white border-[#5655D5] hover:border-[#3F3EAB] rounded-none"
                   : "btn-primary bg-black rounded-none"
               }`}
               onClick={handleTransfer}
@@ -324,7 +326,7 @@ const Home: NextPage = () => {
 
       <div className="lg:grid lg:grid-cols-3 mb-10 border-t-[0px] border-black lg:border-t-[1px]">
         {/* Mint Events section */}
-        <section className="col-span-3 bg-[#DDDDDD] border-x-[1px] border-black lg:border-b-[1px] pt-6">
+        <section className="col-span-3 bg-[#DDDDDD] border-x-[1px] border-black border-b-[1px] pt-6">
           <div className="flex items-center flex-col flex-grow">
             <h2 className="text-xl font-bold mb-4 text-black-500">Your Mint Events</h2>
             <div className="px-5 w-full max-w-[1200px]">
