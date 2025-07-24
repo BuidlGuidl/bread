@@ -268,9 +268,13 @@ const Home: NextPage = () => {
         {/* Bread Balance Section */}
         <section className="bg-[#F6F6F6] text-2xl font-semibold lg:flex-1 p-6 flex flex-col items-center lg:justify-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0">
           <span>🍞 Your Bread Balance:</span>
-          <span className="text-center text-2xl font-semibold mb-10">
-            {breadBalance ? Number(formatEther(breadBalance)).toLocaleString() : "0"} BGBRD
-          </span>
+          {!connectedAddress ? (
+            <span className="text-center text-lg mb-10">Connect your wallet to see your bread balance</span>
+          ) : (
+            <span className="text-center text-2xl font-semibold mb-10">
+              {breadBalance ? Number(formatEther(breadBalance)).toLocaleString() : "0"} BGBRD
+            </span>
+          )}
           {pendingBread !== null && (
             <>
               <span className="text-2xl font-semibold">👨‍🍳 Bread Baking:</span>
@@ -301,11 +305,11 @@ const Home: NextPage = () => {
             <div className="h-2"></div>
 
             <button
-              className={`w-full btn rounded-none text-lg font-semibold ${
+              className={`w-full btn rounded-none text-lg text-black font-chivo font-normal ${
                 isTransferring
                   ? "btn-disabled bg-black rounded-none"
                   : transferTo && transferAmount
-                  ? "bg-[#5655D5] hover:bg-[#3F3EAB] text-white border-[#5655D5] hover:border-[#3F3EAB] rounded-none"
+                  ? "bg-white border-black hover:bg-[#7877FF] rounded-none"
                   : "btn-primary bg-black rounded-none"
               }`}
               onClick={handleTransfer}
@@ -326,13 +330,13 @@ const Home: NextPage = () => {
 
       <div className="lg:grid lg:grid-cols-3 mb-10 border-t-[0px] border-black lg:border-t-[1px]">
         {/* Mint Events section */}
-        <section className="col-span-3 bg-[#DDDDDD] border-x-[1px] border-black border-b-[1px] pt-6">
+        <section className="col-span-3 bg-white lg:bg-[#DDDDDD] border-x-[1px] border-black border-b-[1px] pt-6">
           <div className="flex items-center flex-col flex-grow">
             <h2 className="text-xl font-bold mb-4 text-black-500">Your Mint Events</h2>
             <div className="px-5 w-full max-w-[1200px]">
               <div className="grid grid-cols-1 gap-4">
-                <div className="bg-[#DDDDDD] px-6 py-4">
-                  <div className="h-[300px] md:h-[600px] overflow-y-auto">
+                <div className="px-6 py-4">
+                  <div className="min-h-[100px] pb-10">
                     {!connectedAddress ? (
                       <p className="text-center text-lg">Connect your wallet to see your mint events</p>
                     ) : mintEventsWithTime.length === 0 ? (
