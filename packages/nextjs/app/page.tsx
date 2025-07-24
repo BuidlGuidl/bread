@@ -8,7 +8,11 @@ import { formatEther, parseEther } from "viem";
 import { useAccount, useEnsName } from "wagmi";
 import { mainnet } from "wagmi/chains";
 import { AddressInput, InputBase } from "~~/components/scaffold-eth";
-import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import {
+  useScaffoldReadContract,
+  useScaffoldWatchContractEvent,
+  useScaffoldWriteContract,
+} from "~~/hooks/scaffold-eth";
 import { notification } from "~~/utils/scaffold-eth";
 
 const Home: NextPage = () => {
@@ -29,13 +33,28 @@ const Home: NextPage = () => {
   const [transferAmount, setTransferAmount] = useState<string>("");
   const [isTransferring, setIsTransferring] = useState(false);
 
-  const { data: breadBalance } = useScaffoldReadContract({
+  const { data: breadBalance, refetch: refetchBalance } = useScaffoldReadContract({
     contractName: "BuidlGuidlBread",
     functionName: "balanceOf",
     args: [connectedAddress],
   });
 
   const { writeContractAsync: writeBreadContract } = useScaffoldWriteContract("BuidlGuidlBread");
+
+  // Watch for Transfer events to update balance automatically
+  useScaffoldWatchContractEvent({
+    contractName: "BuidlGuidlBread",
+    eventName: "Transfer",
+    onLogs: logs => {
+      logs.forEach(log => {
+        const { from, to } = log.args as any;
+        // Refetch balance if the connected user is either sender or receiver
+        if (from === connectedAddress || to === connectedAddress) {
+          refetchBalance();
+        }
+      });
+    },
+  });
 
   // Set up interval to fetch pending bread every 5 seconds
   // Note: ENS resolution happens automatically via useEnsName hook and only when address changes
