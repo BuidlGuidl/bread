@@ -185,7 +185,7 @@ const Home: NextPage = () => {
         {/* Transfer Interface */}
         <section className="bg-[#DDDDDD] lg:w-7/12 p-6 flex flex-col items-center border-x-[1px] border-b-[1px] border-black lg:border-b-0 lg:border-l-[0px]">
           <h2 className="text-xl font-bold mb-4 text-black-500">Transfer Bread</h2>
-          <div className="space-y-4 w-full max-w-xl">
+          <div className={`space-y-4 w-full max-w-xl ${!connectedAddress ? "pointer-events-none" : ""}`}>
             <div>
               <label className="block text-sm font-medium mb-2">Recipient Address</label>
               <AddressInput value={transferTo} onChange={setTransferTo} placeholder="Enter recipient address" />
