@@ -166,7 +166,7 @@ const Home: NextPage = () => {
       {/* Second row */}
       <div className="flex flex-col lg:flex-row border-black lg:border-b-[1px] mb-10">
         {/* Bread Balance Section */}
-        <section className="bg-[#F6F6F6] text-2xl font-semibold lg:flex-1 p-6 flex flex-col items-center lg:justify-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0">
+        <section className="bg-[#F6F6F6] text-2xl font-semibold lg:w-5/12 p-6 flex flex-col items-center lg:justify-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0">
           <span>🍞 Your Bread Balance:</span>
           {!connectedAddress ? (
             <span className="text-center text-lg mb-10">Connect your wallet to see your bread balance</span>
@@ -183,9 +183,9 @@ const Home: NextPage = () => {
           )}
         </section>
         {/* Transfer Interface */}
-        <section className="bg-[#DDDDDD] lg:flex-1 p-6 flex flex-col items-center border-x-[1px] border-b-[1px] border-black lg:border-b-0 lg:border-l-[0px]">
+        <section className="bg-[#DDDDDD] lg:w-7/12 p-6 flex flex-col items-center border-x-[1px] border-b-[1px] border-black lg:border-b-0 lg:border-l-[0px]">
           <h2 className="text-xl font-bold mb-4 text-black-500">Transfer Bread</h2>
-          <div className="space-y-4 w-full max-w-md">
+          <div className="space-y-4 w-full max-w-xl">
             <div>
               <label className="block text-sm font-medium mb-2">Recipient Address</label>
               <AddressInput value={transferTo} onChange={setTransferTo} placeholder="Enter recipient address" />
