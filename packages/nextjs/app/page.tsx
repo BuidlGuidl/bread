@@ -5,25 +5,11 @@ import Image from "next/image";
 import axios from "axios";
 import { NextPage } from "next";
 import { formatEther, parseEther } from "viem";
-import { useAccount, useEnsName, usePublicClient } from "wagmi";
+import { useAccount, useEnsName } from "wagmi";
 import { mainnet } from "wagmi/chains";
 import { AddressInput, InputBase } from "~~/components/scaffold-eth";
-import {
-  useScaffoldEventHistory,
-  useScaffoldReadContract,
-  useScaffoldWatchContractEvent,
-  useScaffoldWriteContract,
-} from "~~/hooks/scaffold-eth";
+import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { notification } from "~~/utils/scaffold-eth";
-
-type EventWithTimestamp = {
-  event: any; // The event object
-  timestamp: string; // Human-readable timestamp
-};
-
-const formatTimestamp = (timestamp: number) => {
-  return new Date(timestamp * 1000).toLocaleString();
-};
 
 const Home: NextPage = () => {
   // Bread-related state
@@ -36,8 +22,6 @@ const Home: NextPage = () => {
     address: connectedAddress,
     chainId: mainnet.id,
   });
-  const publicClient = usePublicClient();
-  const [mintEventsWithTime, setMintEventsWithTime] = useState<EventWithTimestamp[]>([]);
   const [pendingBread, setPendingBread] = useState<number | null>(null);
 
   // Transfer state
@@ -52,109 +36,6 @@ const Home: NextPage = () => {
   });
 
   const { writeContractAsync: writeBreadContract } = useScaffoldWriteContract("BuidlGuidlBread");
-
-  const { data: mintEvents } = useScaffoldEventHistory({
-    contractName: "BuidlGuidlBread",
-    eventName: "BatchMint",
-    fromBlock: 0n,
-    filters: connectedAddress ? { user: connectedAddress as `0x${string}` } : undefined,
-  });
-
-  // Debug logging
-  useEffect(() => {
-    console.log("Connected address:", connectedAddress);
-    console.log("Mint events:", mintEvents);
-    if (mintEvents) {
-      console.log("Number of mint events:", mintEvents.length);
-      mintEvents.forEach((event, index) => {
-        console.log(`Event ${index}:`, {
-          user: (event.args as any)?.user,
-          amount: (event.args as any)?.amount,
-          blockNumber: event.log?.blockNumber,
-        });
-      });
-    }
-  }, [mintEvents, connectedAddress]);
-
-  // Listen for new BatchMint events
-  useScaffoldWatchContractEvent({
-    contractName: "BuidlGuidlBread",
-    eventName: "BatchMint",
-    onLogs: logs => {
-      logs.forEach(async log => {
-        // Only add events for the connected user
-        if ((log.args as any)?.user === connectedAddress) {
-          try {
-            const block = log.blockNumber ? await publicClient?.getBlock({ blockNumber: log.blockNumber }) : null;
-            const newEventWithTime = {
-              event: log,
-              timestamp: block ? formatTimestamp(Number(block.timestamp)) : "Unknown time",
-            };
-
-            setMintEventsWithTime(prev => {
-              // Check if event already exists to avoid duplicates
-              const exists = prev.some(
-                item =>
-                  item.event.blockNumber === log.blockNumber && item.event.transactionHash === log.transactionHash,
-              );
-              if (!exists) {
-                // Add new event at the beginning (most recent first)
-                return [newEventWithTime, ...prev];
-              }
-              return prev;
-            });
-          } catch (error) {
-            console.error("Error processing new batch mint event:", error);
-          }
-        }
-      });
-    },
-  });
-
-  // Clear events when wallet disconnects and handle events when connected
-  useEffect(() => {
-    if (!connectedAddress) {
-      setMintEventsWithTime([]);
-      return;
-    }
-
-    // Only process events if we have a connected address and events exist
-    if (!mintEvents) {
-      return;
-    }
-
-    const fetchBlockTimestamps = async () => {
-      if (!publicClient) return;
-
-      // Sort events by block number (most recent first)
-      const sortedMintEvents = [...(mintEvents || [])].sort(
-        (a, b) => Number(b.log.blockNumber) - Number(a.log.blockNumber),
-      );
-
-      // Fetch timestamps for mint events
-      const mintPromises = sortedMintEvents.map(async event => {
-        try {
-          const block = await publicClient.getBlock({ blockNumber: event.log.blockNumber });
-          return {
-            event,
-            timestamp: formatTimestamp(Number(block.timestamp)),
-          };
-        } catch (error) {
-          console.error("Error fetching block:", error);
-          return {
-            event,
-            timestamp: "Unknown time",
-          };
-        }
-      });
-
-      const mintResults = await Promise.all(mintPromises);
-
-      setMintEventsWithTime(mintResults);
-    };
-
-    fetchBlockTimestamps();
-  }, [connectedAddress, mintEvents, publicClient]);
 
   // Set up interval to fetch pending bread every 5 seconds
   // Note: ENS resolution happens automatically via useEnsName hook and only when address changes
@@ -264,7 +145,7 @@ const Home: NextPage = () => {
         </div>
       </div>
       {/* Second row */}
-      <div className="flex flex-col lg:flex-row border-black">
+      <div className="flex flex-col lg:flex-row border-black lg:border-b-[1px] mb-10">
         {/* Bread Balance Section */}
         <section className="bg-[#F6F6F6] text-2xl font-semibold lg:flex-1 p-6 flex flex-col items-center lg:justify-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0">
           <span>🍞 Your Bread Balance:</span>
@@ -324,48 +205,6 @@ const Home: NextPage = () => {
                 "Transfer Bread"
               )}
             </button>
-          </div>
-        </section>
-      </div>
-
-      <div className="lg:grid lg:grid-cols-3 mb-10 border-t-[0px] border-black lg:border-t-[1px]">
-        {/* Mint Events section */}
-        <section className="col-span-3 bg-white lg:bg-[#DDDDDD] border-x-[1px] border-black border-b-[1px] pt-6">
-          <div className="flex items-center flex-col flex-grow">
-            <h2 className="text-xl font-bold mb-4 text-black-500">Your Mint Events</h2>
-            <div className="px-5 w-full max-w-[1200px]">
-              <div className="grid grid-cols-1 gap-4">
-                <div className="px-6 py-4">
-                  <div className="min-h-[100px] pb-10">
-                    {!connectedAddress ? (
-                      <p className="text-center text-lg">Connect your wallet to see your mint events</p>
-                    ) : mintEventsWithTime.length === 0 ? (
-                      <p className="text-center text-lg">No mint events found for your address</p>
-                    ) : (
-                      <div className="space-y-3">
-                        {mintEventsWithTime
-                          .filter(
-                            ({ event }) => (event.args as any)?.user?.toLowerCase() === connectedAddress.toLowerCase(),
-                          )
-                          .map(({ event, timestamp }, index) => (
-                            <div key={index} className="bg-black text-white rounded-none p-3">
-                              <div className="flex justify-between items-center">
-                                <div className="flex gap-2 items-center">
-                                  <span className="text-lg font-bold text-[#df57c4]">Minted</span>
-                                  <span className="text-lg">
-                                    {(event.args as any)?.amount ? formatEther((event.args as any).amount) : "0"} BGBRD
-                                  </span>
-                                </div>
-                                <span className="text-sm opacity-90">{timestamp}</span>
-                              </div>
-                            </div>
-                          ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
       </div>
