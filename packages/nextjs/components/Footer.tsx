@@ -33,12 +33,12 @@ export const Footer = () => {
                 <span className="link">BuidlGuidl</span>
               </a>
             </div>
-            <span>·</span>
+            {/* <span>·</span>
             <div className="text-center">
-              <a href="https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA" target="_blank" rel="noreferrer" className="link">
+              <a href="https://t.me/joinchat/2158210292" target="_blank" rel="noreferrer" className="link">
                 Support
               </a>
-            </div>
+            </div> */}
           </div>
         </ul>
         <div>
