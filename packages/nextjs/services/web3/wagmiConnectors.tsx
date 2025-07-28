@@ -25,34 +25,36 @@ const wallets = [
     : []),
 ];
 
-// Global flag to prevent multiple initializations
-let _isInitializing = false;
-let _wagmiConnectors: ReturnType<typeof connectorsForWallets> | null = null;
+// Store the singleton instance on globalThis to persist across hot reloads
+declare global {
+  // eslint-disable-next-line no-var
+  var __scaffoldEthWagmiConnectors: ReturnType<typeof connectorsForWallets> | undefined;
+}
 
 /**
  * wagmi connectors for the wagmi context
- * Enhanced with global initialization flag to prevent React Strict Mode issues
+ * Uses a global singleton pattern that persists across hot reloads
  */
-export const wagmiConnectors = (() => {
-  if (_wagmiConnectors === null && !_isInitializing) {
-    _isInitializing = true;
-    try {
-      _wagmiConnectors = connectorsForWallets(
-        [
-          {
-            groupName: "Supported Wallets",
-            wallets,
-          },
-        ],
-        {
-          appName: "scaffold-eth-2",
-          projectId: scaffoldConfig.walletConnectProjectId,
-        },
-      );
-    } finally {
-      _isInitializing = false;
-    }
+function createWagmiConnectors() {
+  if (globalThis.__scaffoldEthWagmiConnectors) {
+    return globalThis.__scaffoldEthWagmiConnectors;
   }
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return _wagmiConnectors!;
-})();
+
+  const connectors = connectorsForWallets(
+    [
+      {
+        groupName: "Supported Wallets",
+        wallets,
+      },
+    ],
+    {
+      appName: "scaffold-eth-2",
+      projectId: scaffoldConfig.walletConnectProjectId,
+    },
+  );
+
+  globalThis.__scaffoldEthWagmiConnectors = connectors;
+  return connectors;
+}
+
+export const wagmiConnectors = createWagmiConnectors();

@@ -166,7 +166,7 @@ const Home: NextPage = () => {
       {/* Second row */}
       <div className="flex flex-col lg:flex-row border-black lg:border-x-[1px] lg:border-b-[1px] mb-10">
         {/* Bread Balance Section */}
-        <section className="bg-[#F6F6F6] text-2xl font-semibold lg:w-5/12 p-6 flex flex-col items-center lg:justify-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0">
+        <section className="bg-[#F6F6F6] text-2xl font-semibold lg:w-5/12 p-6 flex flex-col items-center lg:justify-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0 lg:border-l-0">
           <span>🍞 Your Bread Balance:</span>
           {!connectedAddress ? (
             <span className="text-center text-lg mb-10">Connect your wallet to see bread balance</span>

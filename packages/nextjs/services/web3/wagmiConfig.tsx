@@ -12,34 +12,40 @@ export const enabledChains = targetNetworks.find((network: Chain) => network.id 
   ? targetNetworks
   : ([...targetNetworks, mainnet] as const);
 
-// Global flag to prevent multiple initializations
-let _isInitializing = false;
-let _wagmiConfig: ReturnType<typeof createConfig> | null = null;
+// Store the singleton instance on globalThis to persist across hot reloads
+declare global {
+  // eslint-disable-next-line no-var
+  var __scaffoldEthWagmiConfig: ReturnType<typeof createConfig> | undefined;
+}
 
-export const wagmiConfig = (() => {
-  if (_wagmiConfig === null && !_isInitializing) {
-    _isInitializing = true;
-    try {
-      _wagmiConfig = createConfig({
-        chains: enabledChains,
-        connectors: wagmiConnectors,
-        ssr: true,
-        client({ chain }) {
-          return createClient({
-            chain,
-            transport: http(getAlchemyHttpUrl(chain.id)),
-            ...(chain.id !== (hardhat as Chain).id
-              ? {
-                  pollingInterval: scaffoldConfig.pollingInterval,
-                }
-              : {}),
-          });
-        },
-      });
-    } finally {
-      _isInitializing = false;
-    }
+/**
+ * wagmi config for the wagmi context
+ * Uses a global singleton pattern that persists across hot reloads
+ */
+function createWagmiConfig() {
+  if (globalThis.__scaffoldEthWagmiConfig) {
+    return globalThis.__scaffoldEthWagmiConfig;
   }
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return _wagmiConfig!;
-})();
+
+  const config = createConfig({
+    chains: enabledChains,
+    connectors: wagmiConnectors,
+    ssr: true,
+    client({ chain }) {
+      return createClient({
+        chain,
+        transport: http(getAlchemyHttpUrl(chain.id)),
+        ...(chain.id !== (hardhat as Chain).id
+          ? {
+              pollingInterval: scaffoldConfig.pollingInterval,
+            }
+          : {}),
+      });
+    },
+  });
+
+  globalThis.__scaffoldEthWagmiConfig = config;
+  return config;
+}
+
+export const wagmiConfig = createWagmiConfig();
