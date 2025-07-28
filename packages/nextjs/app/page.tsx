@@ -143,8 +143,24 @@ const Home: NextPage = () => {
         <section className="bg-[#df57c4] p-6 lg:p-10 w-full lg:w-9/12 border-x-[1px] border-y-[1px] border-black lg:border-none overflow-auto">
           <div className="flex flex-col">
             <p className="mt-0">
-              Some text about BuidlGuidl Bread here. Bread rules. It is the best bread. I look around and say
-              &quot;wow&quot; BuidlGuidl Bread is the best bread. The best I&apos;ve ever had.
+              BuidlGuidl Bread (
+              <a
+                href="https://basescan.org/address/0xF9206cA52a336Fba43264bc6822046D60aEdfc3C"
+                target="_blank"
+                rel="noreferrer"
+                className="link"
+              >
+                BGBRD
+              </a>
+              ) is an ERC20 rewarded to{" "}
+              <a href="https://client.buidlguidl.com/" target="_blank" rel="noreferrer" className="link">
+                BG Client
+              </a>{" "}
+              node operators who opt to support the distributed{" "}
+              <a href="https://rpc.buidlguidl.com/" target="_blank" rel="noreferrer" className="link">
+                BG RPC
+              </a>
+              .
             </p>
           </div>
         </section>
