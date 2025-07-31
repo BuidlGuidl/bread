@@ -76,8 +76,15 @@ const Home: NextPage = () => {
         );
         console.log("API Response:", response.data);
         console.log("API Response bread value:", response.data.bread, "Type:", typeof response.data.bread);
-        // Ensure we return a number or null
-        return typeof response.data.bread === "number" ? response.data.bread : null;
+        // Handle both number and string responses from the API
+        const breadValue = response.data.bread;
+        if (typeof breadValue === "number") {
+          return breadValue;
+        } else if (typeof breadValue === "string") {
+          const parsed = parseFloat(breadValue);
+          return isNaN(parsed) ? null : parsed;
+        }
+        return null;
       } catch (error) {
         console.error(`Error fetching pending bread: ${error}`);
         console.error("Full error:", error);
