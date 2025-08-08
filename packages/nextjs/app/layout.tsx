@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     description,
   },
   icons: {
-    icon: [{ url: "/favicon-client.png", sizes: "32x32", type: "image/png" }],
+    icon: [{ url: "/favicon-bread.png", sizes: "32x32", type: "image/png" }],
   },
 };
 
