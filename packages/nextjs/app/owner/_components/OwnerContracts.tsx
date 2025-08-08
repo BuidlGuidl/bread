@@ -2,9 +2,9 @@
 
 import { useEffect } from "react";
 import { OwnerContractUI } from "./OwnerContractUI";
-import { useSessionStorage } from "usehooks-ts";
 import { useAccount } from "wagmi";
 import { BarsArrowUpIcon } from "@heroicons/react/20/solid";
+import { useClientSessionStorage } from "~~/hooks/scaffold-eth/useClientStorage";
 import { ContractName, GenericContract } from "~~/utils/scaffold-eth/contract";
 import { getAllContracts } from "~~/utils/scaffold-eth/contractsData";
 
@@ -17,10 +17,9 @@ const contractNames = Object.keys(contractsData).sort((a, b) => {
 export function OwnerContracts() {
   const { isConnected } = useAccount();
 
-  const [selectedContract, setSelectedContract] = useSessionStorage<ContractName>(
+  const [selectedContract, setSelectedContract] = useClientSessionStorage<ContractName>(
     selectedContractStorageKey,
     contractNames[0],
-    { initializeWithValue: false },
   );
 
   useEffect(() => {

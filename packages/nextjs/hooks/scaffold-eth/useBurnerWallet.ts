@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useClientLocalStorage } from "./useClientStorage";
 import { useTargetNetwork } from "./useTargetNetwork";
-import { useLocalStorage } from "usehooks-ts";
 import { Chain, Hex, HttpTransport, PrivateKeyAccount, createWalletClient, http } from "viem";
 import { WalletClient } from "viem";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
@@ -59,9 +59,7 @@ type BurnerAccount = {
  * Creates a burner wallet
  */
 export const useBurnerWallet = (): BurnerAccount => {
-  const [burnerSk, setBurnerSk] = useLocalStorage<Hex>(burnerStorageKey, newDefaultPrivateKey, {
-    initializeWithValue: false,
-  });
+  const [burnerSk, setBurnerSk] = useClientLocalStorage<Hex>(burnerStorageKey, newDefaultPrivateKey);
 
   const { targetNetwork } = useTargetNetwork();
   const publicClient = usePublicClient({ chainId: targetNetwork.id });

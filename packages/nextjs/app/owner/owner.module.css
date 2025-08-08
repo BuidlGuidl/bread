@@ -18,4 +18,4 @@
 /* Specific override for text-sm elements */
 .ownerPage [class*="text-sm"] {
   color: white !important;
-} 
+}
