@@ -147,7 +147,7 @@ const Home: NextPage = () => {
       {/* First row */}
       <div className="flex flex-col lg:flex-row lg:border-x-[1px] lg:border-y-[1px] border-black">
         {/* Introduction section */}
-        <section className="bg-[#df57c4] p-6 lg:p-10 w-full lg:w-9/12 border-x-[1px] border-y-[1px] border-black lg:border-none overflow-auto">
+        <section className="bg-[#F6F6F6] p-6 lg:p-10 w-full lg:w-9/12 border-x-[1px] border-y-[1px] border-black lg:border-none overflow-auto">
           <div className="flex flex-col">
             <p className="mt-0">
               BuidlGuidl Bread (
@@ -175,10 +175,10 @@ const Home: NextPage = () => {
         {/* Second row for mobile - flex row to make sections share the row */}
         <div className="flex flex-row w-full lg:w-3/12 max-h-[205px] lg:max-h-[535px]">
           {/* Transfer Interface */}
-          <section className="bg-[#20F658] p-6 flex justify-center items-center border-r-[1px] border-l-[1px] border-black lg:border-r-0 flex-1">
+          <section className="bg-black flex justify-center items-center border-r-[1px] border-l-[1px] border-black lg:border-r-0 flex-1">
             <Image
-              src="/satellite-10fps.gif"
-              alt="satellite"
+              src="/bg-oven-382px-32colors.gif"
+              alt="BG oven"
               className="object-contain max-h-full"
               width={436}
               height={535}
@@ -189,7 +189,7 @@ const Home: NextPage = () => {
       {/* Second row */}
       <div className="flex flex-col lg:flex-row border-black lg:border-x-[1px] lg:border-b-[1px] mb-10">
         {/* Bread Balance Section */}
-        <section className="bg-[#F6F6F6] text-2xl font-semibold lg:w-5/12 p-6 flex flex-col items-center lg:justify-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0 lg:border-l-0">
+        <section className="bg-[#ff67f9] text-2xl font-semibold lg:w-5/12 p-6 flex flex-col items-center lg:justify-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0 lg:border-l-0">
           <span>🍞 Your Bread Balance:</span>
           {!connectedAddress ? (
             <span className="text-center text-lg mb-10">Connect your wallet to see bread balance</span>
@@ -232,7 +232,7 @@ const Home: NextPage = () => {
                 isTransferring
                   ? "btn-disabled bg-black rounded-none"
                   : transferTo && transferAmount
-                  ? "bg-white border-black hover:bg-[#7877FF] rounded-none"
+                  ? "bg-white border-black hover:bg-[#ee5de9] rounded-none"
                   : "btn-primary bg-black rounded-none"
               }`}
               onClick={handleTransfer}

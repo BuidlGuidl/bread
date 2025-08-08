@@ -31,7 +31,7 @@ export const RainbowKitCustomConnectButton = () => {
                 return (
                   <button
                     className="btn bg-white border-black border-[1px] rounded-none btn-sm md:btn-md lg:btn-lg
-                  font-chivo font-normal hover:bg-[#7877FF] hover:text-black hover:border-black"
+                  font-chivo font-normal hover:bg-[#ee5de9] hover:text-black hover:border-black"
                     onClick={openConnectModal}
                     type="button"
                   >
