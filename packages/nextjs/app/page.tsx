@@ -159,15 +159,20 @@ const Home: NextPage = () => {
               >
                 BGBRD
               </a>
-              ) is an ERC20 rewarded to{" "}
+              ) is an ERC-20 token that rewards community members who run a{" "}
               <a href="https://client.buidlguidl.com/" target="_blank" rel="noreferrer" className="link">
-                BG Client
+                BG Client node
               </a>{" "}
-              node operators who opt to support the distributed{" "}
+              and choose to participate in powering the distributed{" "}
               <a href="https://rpc.buidlguidl.com/" target="_blank" rel="noreferrer" className="link">
                 BG RPC
               </a>
-              .
+              . Supporting the{" "}
+              <a href="https://rpc.buidlguidl.com/" target="_blank" rel="noreferrer" className="link">
+                BG RPC
+              </a>{" "}
+              strengthens the reliability, decentralization, and resilience of infrastructure that serves developers and
+              dApps.
             </p>
           </div>
         </section>
