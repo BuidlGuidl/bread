@@ -145,9 +145,9 @@ const Home: NextPage = () => {
   return (
     <div className="container mx-auto">
       {/* First row */}
-      <div className="flex flex-col lg:flex-row lg:border-x-[1px] lg:border-y-[1px] border-black">
+      <div className="flex flex-col lg:flex-row lg:border-x-[1px] lg:border-y-[1px] bg-black border-black">
         {/* Introduction section */}
-        <section className="bg-[#F6F6F6] p-6 lg:p-10 w-full lg:w-9/12 border-x-[1px] border-y-[1px] border-black lg:border-none overflow-auto">
+        <section className="bg-[#F6F6F6] p-6 lg:p-10 w-full lg:w-7/12 border-x-[1px] border-y-[1px] border-black lg:border-none overflow-auto">
           <div className="flex flex-col">
             <p className="mt-0">
               BuidlGuidl Bread (
@@ -178,11 +178,11 @@ const Home: NextPage = () => {
         </section>
 
         {/* Second row for mobile - flex row to make sections share the row */}
-        <div className="flex flex-row w-full lg:w-3/12 max-h-[205px] lg:max-h-[535px]">
+        <div className="flex flex-row w-full bg-black lg:w-5/12 max-h-[225px] lg:max-h-[535px]">
           {/* Transfer Interface */}
           <section className="bg-black flex justify-center items-center border-r-[1px] border-l-[1px] border-black lg:border-r-0 flex-1">
             <Image
-              src="/bg-oven-382px-32colors.gif"
+              src="/bg-oven-382px-394px-32c.gif"
               alt="BG oven"
               className="object-contain max-h-full"
               width={436}
@@ -194,10 +194,10 @@ const Home: NextPage = () => {
       {/* Second row */}
       <div className="flex flex-col lg:flex-row border-black lg:border-x-[1px] lg:border-b-[1px] mb-10">
         {/* Bread Balance Section */}
-        <section className="bg-[#ff67f9] text-2xl font-semibold lg:w-5/12 p-6 flex flex-col items-center lg:justify-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0 lg:border-l-0">
+        <section className="bg-[#ff67f9] text-2xl font-semibold lg:w-5/12 px-6 py-12 lg:py-6 flex flex-col items-center justify-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0 lg:border-l-0">
           <span>🍞 Your Bread Balance:</span>
           {!connectedAddress ? (
-            <span className="text-center text-lg mb-10">Connect your wallet to see bread balance</span>
+            <span className="text-center text-lg">Connect your wallet to see bread balance</span>
           ) : (
             <span className="text-center text-2xl font-semibold mb-10">
               {breadBalance ? Number(formatEther(breadBalance)).toLocaleString() : "0"} BGBRD
@@ -213,7 +213,7 @@ const Home: NextPage = () => {
         {/* Transfer Interface */}
         <section className="bg-[#DDDDDD] lg:w-7/12 p-6 flex flex-col items-center border-x-[1px] border-b-[1px] border-black lg:border-b-0 lg:border-x-[0px]">
           <h2 className="text-xl font-bold mb-4 text-black-500">Transfer Bread</h2>
-          <div className={`space-y-4 w-full max-w-xl ${!connectedAddress ? "pointer-events-none" : ""}`}>
+          <div className={`space-y-4 mb-8 w-full max-w-xl ${!connectedAddress ? "pointer-events-none" : ""}`}>
             <div>
               <label className="block text-sm font-medium mb-2">Recipient Address</label>
               <AddressInput value={transferTo} onChange={setTransferTo} placeholder="Enter recipient address" />

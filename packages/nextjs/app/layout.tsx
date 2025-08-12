@@ -7,7 +7,7 @@ import "~~/styles/globals.css";
 const baseUrl = process.env.VERCEL_URL
   ? `https://client.buidlguidl.com`
   : `http://localhost:${process.env.PORT || 3000}`;
-const imageUrl = `${baseUrl}/thumbnail-client.png`;
+const imageUrl = `${baseUrl}/thumbnail-bread.png`;
 
 const title = "BG Bread";
 const titleTemplate = "%s | BG Bread";
