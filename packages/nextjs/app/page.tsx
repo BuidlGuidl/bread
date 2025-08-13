@@ -178,15 +178,19 @@ const Home: NextPage = () => {
         </section>
 
         {/* Second row for mobile - flex row to make sections share the row */}
-        <div className="flex flex-row w-full bg-black lg:w-5/12 max-h-[225px] lg:max-h-[535px]">
+        <div className="flex flex-row w-full bg-black lg:w-5/12 h-[225px] lg:h-[394px]">
           {/* Transfer Interface */}
-          <section className="bg-black flex justify-center items-center border-r-[1px] border-l-[1px] border-black lg:border-r-0 flex-1">
+          <section
+            className="bg-black flex justify-center items-center border-r-[1px] border-l-[1px] border-black lg:border-r-0 flex-1"
+            style={{ aspectRatio: "436/394" }}
+          >
             <Image
               src="/bg-oven-382px-394px-32c.gif"
               alt="BG oven"
-              className="object-contain max-h-full"
+              className="object-contain max-w-full max-h-full lg:h-[394px] lg:w-auto"
               width={436}
-              height={535}
+              height={394}
+              style={{ aspectRatio: "436/394" }}
             />
           </section>
         </div>
