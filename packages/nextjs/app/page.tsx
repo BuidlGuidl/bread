@@ -179,19 +179,19 @@ const Home: NextPage = () => {
 
         {/* Second row for mobile - flex row to make sections share the row */}
         <div className="flex flex-row w-full bg-black lg:w-5/12 h-[225px] lg:h-[394px]">
-          {/* Transfer Interface */}
-          <section
-            className="bg-black flex justify-center items-center border-r-[1px] border-l-[1px] border-black lg:border-r-0 flex-1"
-            style={{ aspectRatio: "436/394" }}
-          >
-            <Image
-              src="/bg-oven-382px-394px-32c.gif"
-              alt="BG oven"
-              className="object-contain max-w-full max-h-full lg:h-[394px] lg:w-auto"
-              width={436}
-              height={394}
-              style={{ aspectRatio: "436/394" }}
-            />
+          {/* Oven GIF Section */}
+          <section className="bg-black flex justify-center items-center border-r-[1px] border-l-[1px] border-black lg:border-r-0 flex-1 overflow-hidden">
+            <div className="w-full h-full flex justify-center items-center">
+              <Image
+                src="/bg-oven-382px-394px-32c.gif"
+                alt="BG oven"
+                className="object-contain w-full h-full"
+                width={436}
+                height={394}
+                priority
+                sizes="(max-width: 1024px) 50vw, 436px"
+              />
+            </div>
           </section>
         </div>
       </div>
