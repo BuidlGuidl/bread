@@ -16,6 +16,23 @@ import {
 import { notification } from "~~/utils/scaffold-eth";
 
 const Home: NextPage = () => {
+  // Helper function to format numbers with conditional decimal places
+  const formatBreadAmount = (amount: number): string => {
+    // Check if the number has decimal places
+    const hasDecimals = amount % 1 !== 0;
+
+    if (hasDecimals) {
+      // Show 2 decimal places for numbers with decimals
+      return amount.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    } else {
+      // Show no decimal places for whole numbers
+      return amount.toLocaleString();
+    }
+  };
+
   // Bread-related state
   const { address: connectedAddress } = useAccount();
   const {
@@ -57,7 +74,7 @@ const Home: NextPage = () => {
   });
 
   // Set up interval to fetch pending bread every 5 seconds
-  // Note: ENS resolution happens automatically via useEnsName hook and only when address changes
+  // Note: API always uses address, not ENS names
   useEffect(() => {
     if (!connectedAddress) {
       setPendingBread(null);
@@ -67,8 +84,8 @@ const Home: NextPage = () => {
     // Fetch pending bread amount from API
     const fetchPendingBread = async (address: string, ensName?: string | null) => {
       try {
-        // Use ENS name if available, otherwise use address
-        const queryParam = ensName || address;
+        // Always use address for the API call (ENS not supported by the endpoint)
+        const queryParam = address;
         console.log("Fetching pending bread for:", queryParam, "(ENS:", ensName, "Address:", address, ")");
         console.log("ENS Loading:", ensLoading, "ENS Error:", ensError);
         const response = await axios.get(
@@ -204,13 +221,13 @@ const Home: NextPage = () => {
             <span className="text-center text-lg">Connect your wallet to see bread balance</span>
           ) : (
             <span className="text-center text-2xl font-semibold mb-10">
-              {breadBalance ? Number(formatEther(breadBalance)).toLocaleString() : "0"} BGBRD
+              {breadBalance ? formatBreadAmount(Number(formatEther(breadBalance))) : "0"} BGBRD
             </span>
           )}
           {pendingBread !== null && (
             <>
               <span className="text-2xl font-semibold">👨‍🍳 Bread Baking:</span>
-              <span> {pendingBread} BGBRD</span>
+              <span> {formatBreadAmount(pendingBread)} BGBRD</span>
             </>
           )}
         </section>
