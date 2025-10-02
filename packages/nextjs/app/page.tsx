@@ -213,7 +213,11 @@ const Home: NextPage = () => {
         </div>
       </div>
       {/* Second row */}
-      <div className="flex flex-col lg:flex-row border-black lg:border-x-[1px] lg:border-b-[1px] mb-10">
+      <div
+        className={`flex flex-col lg:flex-row border-black lg:border-x-[1px] lg:border-b-[1px] ${
+          connectedAddress ? "mb-0" : "mb-10"
+        }`}
+      >
         {/* Bread Balance Section */}
         <section className="bg-[#ff67f9] text-2xl font-semibold lg:w-5/12 px-6 py-12 lg:py-6 flex flex-col items-center justify-center border-x-[1px] border-y-[1px] border-black lg:border-b-0 lg:border-t-0 lg:border-l-0">
           <span>🍞 Your Bread Balance:</span>
@@ -276,6 +280,14 @@ const Home: NextPage = () => {
           </div>
         </section>
       </div>
+      {connectedAddress && (
+        <div className="flex flex-col lg:flex-row border-black border-x-[1px] border-b-[1px] mb-10">
+          {/* Your Nodes Info Section */}
+          <section className="bg-[#f6f6f6] text-2xl font-semibold w-full p-6 flex flex-col items-center justify-center">
+            <span className="text-xl font-bold">Your Nodes</span>
+          </section>
+        </div>
+      )}
     </div>
   );
 };
