@@ -45,6 +45,24 @@ const Home: NextPage = () => {
   });
   const [pendingBread, setPendingBread] = useState<number | null>(null);
 
+  // Nodes state
+  interface NodeData {
+    nodeId: string;
+    executionClient: string;
+    consensusClient: string;
+    blockNumber: number;
+    isFollowingHead: boolean;
+    nExecutionPeers: string;
+    nConsensusPeers: string;
+  }
+
+  interface NodesResponse {
+    nodesOnline: number;
+    nodes: NodeData[];
+  }
+
+  const [nodesData, setNodesData] = useState<NodesResponse | null>(null);
+
   // Transfer state
   const [transferTo, setTransferTo] = useState<string>("");
   const [transferAmount, setTransferAmount] = useState<string>("");
@@ -123,6 +141,35 @@ const Home: NextPage = () => {
     // Cleanup interval on unmount or address change
     return () => clearInterval(interval);
   }, [connectedAddress, ensName, ensLoading, ensError]);
+
+  // Fetch nodes data when wallet is connected
+  useEffect(() => {
+    if (!connectedAddress) {
+      setNodesData(null);
+      return;
+    }
+
+    const fetchNodesData = async () => {
+      try {
+        const response = await axios.get<NodesResponse>(
+          `https://pool.mainnet.rpc.buidlguidl.com:48547/yournodes?owner=${connectedAddress}`,
+        );
+        setNodesData(response.data);
+      } catch (error) {
+        console.error("Error fetching nodes data:", error);
+        setNodesData(null);
+      }
+    };
+
+    // Fetch immediately
+    fetchNodesData();
+
+    // Set up interval to fetch every 10 seconds
+    const interval = setInterval(fetchNodesData, 15000);
+
+    // Cleanup interval on unmount or address change
+    return () => clearInterval(interval);
+  }, [connectedAddress]);
 
   const handleTransfer = async () => {
     if (!transferTo || !transferAmount || !connectedAddress) {
@@ -283,8 +330,50 @@ const Home: NextPage = () => {
       {connectedAddress && (
         <div className="flex flex-col lg:flex-row border-black border-x-[1px] border-b-[1px] mb-10">
           {/* Your Nodes Info Section */}
-          <section className="bg-[#f6f6f6] text-2xl font-semibold w-full p-6 flex flex-col items-center justify-center">
-            <span className="text-xl font-bold">Your Nodes</span>
+          <section className="bg-[#f6f6f6] w-full p-6 flex flex-col">
+            <span className="text-xl font-bold mb-4 text-center">Your Nodes ({nodesData?.nodes.length})</span>
+            {nodesData === null ? (
+              <div className="text-center text-gray-600">Loading nodes data...</div>
+            ) : nodesData.nodes.length === 0 ? (
+              <div className="text-center text-gray-600">No nodes found for this address</div>
+            ) : (
+              <div className="space-y-4">
+                {nodesData.nodes.map((node, index) => (
+                  <div key={index} className="bg-white p-4 rounded-lg border border-gray-300 shadow-sm">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                      <div>
+                        <span className="font-semibold">Node ID: </span>
+                        <span>{node.nodeId}</span>
+                      </div>
+                      <div>
+                        <span className="font-semibold">Block Number: </span>
+                        <span>{node.blockNumber.toLocaleString()}</span>
+                      </div>
+                      <div>
+                        <span className="font-semibold">Execution Client: </span>
+                        <span>{node.executionClient}</span>
+                      </div>
+                      <div>
+                        <span className="font-semibold">Consensus Client: </span>
+                        <span>{node.consensusClient}</span>
+                      </div>
+                      <div>
+                        <span className="font-semibold">Following Head: </span>
+                        <span className={node.isFollowingHead ? "text-green-600" : "text-red-600"}>
+                          {node.isFollowingHead ? "Yes" : "No"}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="font-semibold">Peers: </span>
+                        <span>
+                          Execution: {node.nExecutionPeers} | Consensus: {node.nConsensusPeers}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
         </div>
       )}
