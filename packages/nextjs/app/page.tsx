@@ -331,7 +331,7 @@ const Home: NextPage = () => {
         <div className="flex flex-col lg:flex-row border-black border-x-[1px] border-b-[1px] mb-10">
           {/* Your Nodes Info Section */}
           <section className="bg-[#f6f6f6] w-full p-6 flex flex-col">
-            <span className="text-xl font-bold mb-4 text-center">Your Nodes ({nodesData?.nodes.length})</span>
+            <span className="text-xl font-bold mb-8 text-center">Your Nodes ({nodesData?.nodes.length})</span>
             {nodesData === null ? (
               <div className="text-center text-gray-600">Loading nodes data...</div>
             ) : nodesData.nodes.length === 0 ? (
@@ -339,15 +339,23 @@ const Home: NextPage = () => {
             ) : (
               <div className="space-y-4">
                 {nodesData.nodes.map((node, index) => (
-                  <div key={index} className="bg-white p-4 rounded-lg border border-gray-300 shadow-sm">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                      <div>
-                        <span className="font-semibold">Node ID: </span>
+                  <div key={index} className="bg-white p-4 rounded-none border border-gray-300">
+                    <div className="grid grid-cols-1 text-sm mb-4">
+                      <div className="font-semibold mx-auto">
+                        <span>Node ID: </span>
                         <span>{node.nodeId}</span>
                       </div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                       <div>
                         <span className="font-semibold">Block Number: </span>
                         <span>{node.blockNumber.toLocaleString()}</span>
+                      </div>
+                      <div>
+                        <span className="font-semibold">Following Chain: </span>
+                        <span className={node.isFollowingHead ? "text-green-600" : "text-red-600"}>
+                          {node.isFollowingHead ? "Yes" : "No"}
+                        </span>
                       </div>
                       <div>
                         <span className="font-semibold">Execution Client: </span>
@@ -356,12 +364,6 @@ const Home: NextPage = () => {
                       <div>
                         <span className="font-semibold">Consensus Client: </span>
                         <span>{node.consensusClient}</span>
-                      </div>
-                      <div>
-                        <span className="font-semibold">Following Head: </span>
-                        <span className={node.isFollowingHead ? "text-green-600" : "text-red-600"}>
-                          {node.isFollowingHead ? "Yes" : "No"}
-                        </span>
                       </div>
                       <div>
                         <span className="font-semibold">Peers: </span>
