@@ -50,7 +50,7 @@ const Home: NextPage = () => {
     nodeId: string;
     executionClient: string;
     consensusClient: string;
-    blockNumber: number;
+    blockNumber: number | null;
     isFollowingHead: boolean;
     nExecutionPeers: string;
     nConsensusPeers: string;
@@ -349,7 +349,7 @@ const Home: NextPage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                       <div className="order-1">
                         <span className="font-semibold">Block Number: </span>
-                        <span>{node.blockNumber.toLocaleString()}</span>
+                        <span>{node.blockNumber !== null ? node.blockNumber.toLocaleString() : "N/A"}</span>
                       </div>
                       <div className="order-3 md:order-2">
                         <span className="font-semibold">
