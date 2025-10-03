@@ -362,8 +362,16 @@ const Home: NextPage = () => {
                       </div>
                       <div className="order-2 md:order-3">
                         <span className="font-semibold">Following Chain: </span>
-                        <span className={node.isFollowingHead ? "text-green-600" : "text-red-600"}>
-                          {node.isFollowingHead ? "Yes" : "No"}
+                        <span
+                          className={
+                            node.blockNumber === null
+                              ? "text-yellow-600"
+                              : node.isFollowingHead
+                              ? "text-green-600"
+                              : "text-red-600"
+                          }
+                        >
+                          {node.blockNumber === null ? "Syncing" : node.isFollowingHead ? "Yes" : "No"}
                         </span>
                       </div>
                       <div className="order-4">
