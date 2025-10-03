@@ -347,11 +347,11 @@ const Home: NextPage = () => {
                       </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                      <div>
+                      <div className="order-1">
                         <span className="font-semibold">Block Number: </span>
                         <span>{node.blockNumber.toLocaleString()}</span>
                       </div>
-                      <div>
+                      <div className="order-3 md:order-2">
                         <span className="font-semibold">
                           <span className="lg:hidden">E Client: </span>
                           <span className="hidden lg:inline">Execution Client: </span>
@@ -360,13 +360,13 @@ const Home: NextPage = () => {
                           {node.executionClient} (peers: {node.nExecutionPeers})
                         </span>
                       </div>
-                      <div>
+                      <div className="order-2 md:order-3">
                         <span className="font-semibold">Following Chain: </span>
                         <span className={node.isFollowingHead ? "text-green-600" : "text-red-600"}>
                           {node.isFollowingHead ? "Yes" : "No"}
                         </span>
                       </div>
-                      <div>
+                      <div className="order-4">
                         <span className="font-semibold">
                           <span className="lg:hidden">C Client: </span>
                           <span className="hidden lg:inline">Consensus Client: </span>
