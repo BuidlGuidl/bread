@@ -352,18 +352,18 @@ const Home: NextPage = () => {
                         <span>{node.blockNumber.toLocaleString()}</span>
                       </div>
                       <div>
-                        <span className="font-semibold">Following Chain: </span>
-                        <span className={node.isFollowingHead ? "text-green-600" : "text-red-600"}>
-                          {node.isFollowingHead ? "Yes" : "No"}
-                        </span>
-                      </div>
-                      <div>
                         <span className="font-semibold">
                           <span className="lg:hidden">E Client: </span>
                           <span className="hidden lg:inline">Execution Client: </span>
                         </span>
                         <span>
                           {node.executionClient} (peers: {node.nExecutionPeers})
+                        </span>
+                      </div>
+                      <div>
+                        <span className="font-semibold">Following Chain: </span>
+                        <span className={node.isFollowingHead ? "text-green-600" : "text-red-600"}>
+                          {node.isFollowingHead ? "Yes" : "No"}
                         </span>
                       </div>
                       <div>
