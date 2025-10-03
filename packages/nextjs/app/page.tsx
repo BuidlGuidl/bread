@@ -335,7 +335,7 @@ const Home: NextPage = () => {
             {nodesData === null ? (
               <div className="text-center text-gray-600">Loading nodes data...</div>
             ) : nodesData.nodes.length === 0 ? (
-              <div className="text-center text-gray-600">No nodes found for this address</div>
+              <div className="text-center text-gray-600 pb-10">No nodes found for this address</div>
             ) : (
               <div className="space-y-4">
                 {nodesData.nodes.map((node, index) => (
@@ -358,17 +358,21 @@ const Home: NextPage = () => {
                         </span>
                       </div>
                       <div>
-                        <span className="font-semibold">Execution Client: </span>
-                        <span>{node.executionClient}</span>
-                      </div>
-                      <div>
-                        <span className="font-semibold">Consensus Client: </span>
-                        <span>{node.consensusClient}</span>
-                      </div>
-                      <div>
-                        <span className="font-semibold">Peers: </span>
+                        <span className="font-semibold">
+                          <span className="lg:hidden">E Client: </span>
+                          <span className="hidden lg:inline">Execution Client: </span>
+                        </span>
                         <span>
-                          Execution: {node.nExecutionPeers} | Consensus: {node.nConsensusPeers}
+                          {node.executionClient} (peers: {node.nExecutionPeers})
+                        </span>
+                      </div>
+                      <div>
+                        <span className="font-semibold">
+                          <span className="lg:hidden">C Client: </span>
+                          <span className="hidden lg:inline">Consensus Client: </span>
+                        </span>
+                        <span>
+                          {node.consensusClient} (peers: {node.nConsensusPeers})
                         </span>
                       </div>
                     </div>
