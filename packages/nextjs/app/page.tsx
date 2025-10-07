@@ -62,6 +62,7 @@ const Home: NextPage = () => {
   }
 
   const [nodesData, setNodesData] = useState<NodesResponse | null>(null);
+  const [nodesDataError, setNodesDataError] = useState<boolean>(false);
 
   // Transfer state
   const [transferTo, setTransferTo] = useState<string>("");
@@ -146,6 +147,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (!connectedAddress) {
       setNodesData(null);
+      setNodesDataError(false);
       return;
     }
 
@@ -154,10 +156,19 @@ const Home: NextPage = () => {
         const response = await axios.get<NodesResponse>(
           `https://pool.mainnet.rpc.buidlguidl.com:48547/yournodes?owner=${connectedAddress}`,
         );
+        // Validate response structure
+        if (!response.data || !Array.isArray(response.data.nodes)) {
+          console.error("Invalid nodes data structure:", response.data);
+          setNodesData(null);
+          setNodesDataError(true);
+          return;
+        }
         setNodesData(response.data);
+        setNodesDataError(false);
       } catch (error) {
         console.error("Error fetching nodes data:", error);
         setNodesData(null);
+        setNodesDataError(true);
       }
     };
 
@@ -327,14 +338,14 @@ const Home: NextPage = () => {
           </div>
         </section>
       </div>
-      {connectedAddress && (
+      {connectedAddress && !nodesDataError && (
         <div className="flex flex-col lg:flex-row border-black border-x-[1px] border-b-[1px] mb-10">
           {/* Your Nodes Info Section */}
           <section className="bg-[#f6f6f6] w-full p-6 flex flex-col">
-            <span className="text-xl font-bold mb-8 text-center">Your Nodes ({nodesData?.nodes.length})</span>
+            <span className="text-xl font-bold mb-8 text-center">Your Nodes ({nodesData?.nodes?.length ?? 0})</span>
             {nodesData === null ? (
               <div className="text-center text-gray-600">Loading nodes data...</div>
-            ) : nodesData.nodes.length === 0 ? (
+            ) : !nodesData.nodes || nodesData.nodes.length === 0 ? (
               <div className="text-center text-gray-600 pb-10">No nodes found for this address</div>
             ) : (
               <div className="space-y-4">
