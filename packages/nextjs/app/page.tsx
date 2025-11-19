@@ -264,6 +264,7 @@ const Home: NextPage = () => {
                 width={436}
                 height={394}
                 priority
+                unoptimized
                 sizes="(max-width: 1024px) 50vw, 436px"
               />
             </div>
