@@ -15,7 +15,7 @@ export const Footer = () => {
           {/* Footer links */}
           <div className="flex flex-col md:flex-row justify-center items-center gap-2 text-sm w-full">
             <div className="text-center">
-              <a href="https://github.com/sfaber34/bread-website" target="_blank" rel="noreferrer" className="link">
+              <a href="https://github.com/BuidlGuidl/bread" target="_blank" rel="noreferrer" className="link">
                 Fork me
               </a>
             </div>
