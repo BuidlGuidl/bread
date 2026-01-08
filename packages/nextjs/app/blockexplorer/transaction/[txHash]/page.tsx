@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { NextPage } from "next";
 import { Hash, Transaction, TransactionReceipt, formatEther, formatUnits } from "viem";
@@ -12,11 +12,11 @@ import { decodeTransactionData, getFunctionDetails } from "~~/utils/scaffold-eth
 import { replacer } from "~~/utils/scaffold-eth/common";
 
 type PageProps = {
-  params: { txHash?: Hash };
+  params: Promise<{ txHash?: Hash }>;
 };
 const TransactionPage: NextPage<PageProps> = ({ params }: PageProps) => {
+  const { txHash } = use(params);
   const client = usePublicClient({ chainId: hardhat.id });
-  const txHash = params?.txHash as Hash;
   const router = useRouter();
   const [transaction, setTransaction] = useState<Transaction>();
   const [receipt, setReceipt] = useState<TransactionReceipt>();

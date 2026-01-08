@@ -6,7 +6,7 @@ import deployedContracts from "~~/contracts/deployedContracts";
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 type PageProps = {
-  params: { address: string };
+  params: Promise<{ address: string }>;
 };
 
 async function fetchByteCodeAndAssembly(buildInfoDirectory: string, contractPath: string) {
@@ -77,7 +77,7 @@ const getContractData = async (address: string) => {
 };
 
 const AddressPage = async ({ params }: PageProps) => {
-  const address = params?.address as string;
+  const { address } = await params;
   const contractData: { bytecode: string; assembly: string } | null = await getContractData(address);
   return <AddressComponent address={address} contractData={contractData} />;
 };
