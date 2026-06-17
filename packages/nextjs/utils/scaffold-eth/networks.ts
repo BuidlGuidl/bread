@@ -34,6 +34,10 @@ export const RPC_CHAIN_NAMES: Record<number, string> = {
 };
 
 export const getAlchemyHttpUrl = (chainId: number) => {
+  if (chainId === chains.base.id) {
+    return "https://mainnet.base.org";
+  }
+
   return RPC_CHAIN_NAMES[chainId]
     ? `https://${RPC_CHAIN_NAMES[chainId]}.g.alchemy.com/v2/${scaffoldConfig.alchemyApiKey}`
     : undefined;
